@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Markdown Info Viewer</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center p-6">
+  <h1 class="text-3xl font-bold mb-4">📁 Private Markdown Info Viewer</h1>
+
+  <select id="projectSelector" class="text-black mb-4 px-4 py-2 rounded">
+    <option value="">Pilih Folder Target...</option>
+    <option value="kopegtelkp.com">kopegtelkp.com</option>
+    <option value="sekolahdelisha.com">sekolahdelisha.com</option>
+  </select>
+
+  <div id="markdown-content" class="prose prose-invert max-w-4xl bg-gray-800 p-6 rounded shadow-lg w-full overflow-x-auto">
+    <p class="text-gray-400">Pilih salah satu project di atas untuk memuat README.md</p>
+  </div>
+
+  <script>
+    const contentEl = document.getElementById('markdown-content');
+    const selector = document.getElementById('projectSelector');
+
+    selector.addEventListener('change', () => {
+      const folder = selector.value;
+      if (!folder) return;
+
+      const rawURL = `https://raw.githubusercontent.com/lonecipher/hack/main/${folder}/README.md`;
+
+      fetch(rawURL)
+        .then(res => {
+          if (!res.ok) throw new Error('README.md tidak ditemukan.');
+          return res.text();
+        })
+        .then(md => {
+          contentEl.innerHTML = marked(md);
+        })
+        .catch(err => {
+          contentEl.innerHTML = `<p class="text-red-400">Gagal memuat README.md: ${err.message}</p>`;
+        });
+    });
+  </script>
+</body>
+</html>
