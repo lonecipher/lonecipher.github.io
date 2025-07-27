@@ -14,6 +14,7 @@
     <option value="">Pilih Folder Target...</option>
     <option value="kopegtelkp.com">kopegtelkp.com</option>
     <option value="sekolahdelisha.com">sekolahdelisha.com</option>
+    <option value="community">community</option>
   </select>
 
   <div id="markdown-content" class="prose prose-invert max-w-4xl bg-gray-800 p-6 rounded shadow-lg w-full overflow-x-auto">
@@ -28,7 +29,7 @@
       const folder = selector.value;
       if (!folder) return;
 
-      const rawURL = `https://raw.githubusercontent.com/lonecipher/hack/main/${folder}/README.md`;
+      const rawURL = `https://raw.githubusercontent.com/lonecipher/${folder}/README.md`;
 
       fetch(rawURL)
         .then(res => {
