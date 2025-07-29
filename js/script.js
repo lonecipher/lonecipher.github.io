@@ -29,7 +29,7 @@ followInfo.innerHTML = `
       });
 
     // Ambil daftar repositori
-    fetch('https://lonecipher.rf.gd/repos.php')
+    fetch("https://api.github.com/users/lonecipher/repos?per_page=100")
       .then(res => res.json())
       .then(repos => {
         const count = document.getElementById('repo-count');
